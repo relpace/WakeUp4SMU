@@ -1,0 +1,11 @@
+[project]
+name = "wakeup4smu"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.5",
+    "pillow>=11.3.0",
+    "pycryptodome>=3.23.0",
+    "requests>=2.32.5",
+]
