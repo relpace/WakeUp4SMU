@@ -1,7 +1,6 @@
 import time
 from io import BytesIO
 from PIL import Image
-from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 

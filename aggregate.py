@@ -1,25 +1,47 @@
 from typing import Iterable, Tuple, Dict
-
 from models import SingleEvent, AggregatedCourse
 
-def make_key(e:SingleEvent) -> Tuple[str, str, str, str, Tuple[int, int], int]:
+def make_key(e:SingleEvent) -> Tuple[str, str, str, str, Tuple[int, int], int,int]:
     return (
         e.kcmc,
         e.jxcdmc,
         e.jxhjmc,
         e.teaxms,
         (e.ps, e.pe),
-        e.xq
+        e.xq,
+        e.zc
     )
 
-def aggregate(events: Iterable[SingleEvent]) -> list[AggregatedCourse]:
-    index: Dict[Tuple[str, str, str, str, Tuple[int, int], int], AggregatedCourse] = {}
+def seek_key(e:SingleEvent) -> Tuple[str, str, str, str, Tuple[int, int], int,int]:
+    return (
+        e.kcmc,
+        e.jxcdmc,
+        e.jxhjmc,
+        e.teaxms,
+        (e.ps, e.pe),
+        e.xq,
+        e.zc-1
+    )
+
+
+def aggregate(events: Iterable[SingleEvent]) -> Tuple[Dict, list[AggregatedCourse]]:
+    index: Dict[Tuple[str, str, str, str, Tuple[int, int], int,int], AggregatedCourse] = {}
+    Course: Dict[str, int] = {}
+    idcount = 0
     for e in events:
-        key = make_key(e)
+        key = seek_key(e)
         week = e.zc
         ac = index.get(key)
+        id = Course.get(e.kcmc)
+        key_old = key
+        key = make_key(e)
         if ac is None:
+            if id is None:
+                id = idcount
+                Course[e.kcmc] = id
+                idcount += 1
             ac = AggregatedCourse(
+                id=id,
                 kcmc=e.kcmc,
                 jxcdmc=e.jxcdmc,
                 jxhjmc=e.jxhjmc,
@@ -30,9 +52,13 @@ def aggregate(events: Iterable[SingleEvent]) -> list[AggregatedCourse]:
                 jssj=e.jssj,
                 pe=e.pe,
                 ps=e.ps,
-                zc=set()
-
+                zc=list()
             )
             index[key] = ac
+        else:
+            index[key] = index.pop(key_old)
+            ac = index.get(key)
         ac.add_zc(week)
-    return list(index.values())
+
+
+    return Course,list(index.values())

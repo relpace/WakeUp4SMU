@@ -26,8 +26,8 @@ class AggregatedCourse:
     jssj: str # 结束时间
     ps: int # 第几节开始
     pe: int # 第几节结束
-    zc: Set[int]  # 周次
+    zc: List[int]  # 周次
+    id: int
 
     def add_zc(self,zc: int):
-        self.zc.add(zc)
-
+        self.zc.append(zc)
