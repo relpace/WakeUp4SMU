@@ -4,6 +4,7 @@ from smulogin import login
 from fetcher import fetch_week_event
 from aggregate import aggregate
 from export import write_schedule, upload_schedule
+from maskpass import askpass
 
 def notice():
     print('''
@@ -40,7 +41,7 @@ def q():
 def main():
     notice()
     account = input("请输入教务账号")
-    password = input("请输入密码")
+    password = askpass(prompt="请输入密码",mask="●")
     weeks = int(input("请输入学期周数"))
     start_date = input("请输入学期起始日期（YYYY-M-D，如:2025-9-1）")
     session = requests.Session()
