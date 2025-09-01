@@ -2,7 +2,7 @@
 name = "wakeup4smu"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.13.5",
     "maskpass>=0.3.7",
