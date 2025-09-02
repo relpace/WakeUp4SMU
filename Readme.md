@@ -13,3 +13,15 @@ uv sync
 uv run main.py
 ```
 ### 脚本运行完毕后，将输出的**整条内容**发送给手机并粘贴到WakeUp课表中进行导入。
+
+## 给Mac用户的保姆级教程：
+1. 点击本页面的绿色按钮Code-Download Zip
+2. 下载完成后解压Zip文件
+3. 按command(⌘)+空格打开spotlight，输入terminal打开终端
+4. 在终端中依次运行：
+```angular2html
+    pip3 install uv -i  https://pypi.tuna.tsinghua.edu.cn/simple
+    cd ~/Downloads/WakeUp4SMU-main
+    uv sync
+    uv run main.py
+```
