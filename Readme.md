@@ -19,9 +19,9 @@ uv run main.py
 2. 下载完成后双击解压Zip文件
 3. 按command(⌘)+空格打开Spotlight，输入terminal打开终端
 4. 在终端中依次运行：
-```angular2html
-    pip3 install uv -i  https://pypi.tuna.tsinghua.edu.cn/simple
-    cd ~/Downloads/WakeUp4SMU-master
-    uv sync
-    uv run main.py
+```
+pip3 install uv -i  https://pypi.tuna.tsinghua.edu.cn/simple
+cd ~/Downloads/WakeUp4SMU-master
+uv sync
+uv run main.py
 ```
