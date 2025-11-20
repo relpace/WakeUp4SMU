@@ -8,14 +8,10 @@ on:
 jobs:
   update-schedule:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        ref: calendar_export
 
     - name: Check Secrets
       env:
@@ -24,6 +20,10 @@ jobs:
       run: |
         if [ -z "$SMU_ACCOUNT" ] || [ -z "$SMU_PASSWORD" ]; then
           echo "Error: SMU_ACCOUNT or SMU_PASSWORD secrets are not set."
+          exit 1
+        fi
+        if [ -z "$GIST_ID" ] || [ -z "$GIST_TOKEN" ]; then
+          echo "Error: GIST_ID or GIST_TOKEN secrets are not set."
           exit 1
         fi
 
@@ -48,9 +48,10 @@ jobs:
         START_DATE: ${{ vars.START_DATE }}
       run: uv run auto_update.py
 
-    - name: Commit and push if changed
-      run: |
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
-        git add schedule.ics
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update schedule.ics" && git push origin HEAD:calendar_export)
+    - name: Deploy to Secret Gist
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
+        token: ${{ secrets.GIST_TOKEN }}
+        gist_id: ${{ secrets.GIST_ID }}
+        file_path: schedule.ics
+        file_type: text/calendar
