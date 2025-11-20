@@ -1,5 +1,5 @@
 # WakeUp4SMU
-#### 更适合南医宝宝体质的WakeUp课表导入工具
+#### 更适合南医宝宝体质的教务课表导出工具
 
 ## 使用方法
 ### 直接运行：从[Release页面](https://github.com/relpace/WakeUp4SMU/releases/latest)下载WakeUp4SMU.exe并运行
@@ -28,7 +28,7 @@ uv run main.py
 ---
 
 # 📅 自动日历同步配置指南
-**以下内容由Gemini生成，感谢Gemini 3 Pro，感谢Antigravity**
+**以下内容由Gemini生成，感谢Gemini 3 Pro，感谢Antigravity**  
 本指南将教你如何利用 GitHub Actions 每天自动抓取南医大教务系统课表，并同步到你的手机日历中。
 
 > 通过本方法配置，你的账号密码仅存储在你个人的 GitHub 仓库中，生成的课表文件存储在私密的 Gist 中。**除了你自己，没有人能看到你的课表。**
