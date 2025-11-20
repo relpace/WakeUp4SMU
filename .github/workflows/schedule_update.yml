@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        ref: calendar_export
 
     - name: Check Secrets
       env:
@@ -51,4 +53,4 @@ jobs:
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
         git add schedule.ics
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update schedule.ics" && git push)
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update schedule.ics" && git push origin HEAD:calendar_export)
