@@ -17,8 +17,8 @@ jobs:
 
     - name: Check Secrets
       env:
-        SMU_ACCOUNT: ${{ secrets.SMU_ACCOUNT }}
-        SMU_PASSWORD: ${{ secrets.SMU_PASSWORD }}
+        SMU_ACCOUNT: ${{ secrets.ACCOUNT }}
+        SMU_PASSWORD: ${{ secrets.PASSWORD }}
       run: |
         if [ -z "$SMU_ACCOUNT" ] || [ -z "$SMU_PASSWORD" ]; then
           echo "Error: SMU_ACCOUNT or SMU_PASSWORD secrets are not set."
@@ -38,9 +38,9 @@ jobs:
 
     - name: Run auto update script
       env:
-        SMU_ACCOUNT: ${{ secrets.SMU_ACCOUNT }}
-        SMU_PASSWORD: ${{ secrets.SMU_PASSWORD }}
-        SEMESTER_WEEKS: ${{ vars.SEMESTER_WEEKS }}
+        SMU_ACCOUNT: ${{ secrets.ACCOUNT }}
+        SMU_PASSWORD: ${{ secrets.PASSWORD }}
+        SEMESTER_WEEKS: ${{ vars.WEEKS }}
         START_DATE: ${{ vars.START_DATE }}
       run: uv run auto_update.py
 
