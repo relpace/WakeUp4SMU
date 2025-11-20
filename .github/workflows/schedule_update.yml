@@ -17,6 +17,8 @@ jobs:
       env:
         SMU_ACCOUNT: ${{ secrets.ACCOUNT }}
         SMU_PASSWORD: ${{ secrets.PASSWORD }}
+        GIST_ID: ${{ secrets.GIST_ID }}
+        GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
       run: |
         if [ -z "$SMU_ACCOUNT" ] || [ -z "$SMU_PASSWORD" ]; then
           echo "Error: SMU_ACCOUNT or SMU_PASSWORD secrets are not set."
