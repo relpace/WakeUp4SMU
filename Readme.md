@@ -25,9 +25,6 @@ cd ~/Downloads/WakeUp4SMU-master
 uv sync
 uv run main.py
 ```
-
-这是一份为您准备的《使用指南》，您可以直接将其放入项目的 `README.md` 或发布在 Wiki 中。这份指南是基于您即将更新的“Gist 同步版”Workflow 编写的，步骤详细且面向非技术背景的同学。
-
 ---
 
 # 📅 自动日历同步配置指南
