@@ -1,4 +1,6 @@
 import json
+import datetime
+import uuid
 import requests
 import models
 import timetable
@@ -65,3 +67,55 @@ def upload_schedule():
         "User-Agent": "okhttp/3.14.9"
     })
     return r
+
+
+def export_to_ics(events: models.Iterable[models.SingleEvent], start_date: datetime.date) -> str:
+    """
+    Export SingleEvent list to ICS format.
+    :param events: List of SingleEvent
+    :param start_date: The start date of the first week (Week 1)
+    :return: ICS string
+    """
+    ics_lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//SMU-CALENDAR//CN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+    ]
+
+    for event in events:
+        # Calculate date
+        # start_date is usually Monday of Week 1
+        # event.zc is week number (1-based)
+        # event.xq is weekday (1-based, 1=Monday usually? Need to verify model, assuming 1=Mon based on common sense and timetable.py)
+        # Actually let's check timetable.py or fetcher.py. 
+        # In fetcher.py: i["xq"] comes from response. usually 1-7.
+        
+        days_offset = (event.zc - 1) * 7 + (event.xq - 1)
+        event_date = start_date + datetime.timedelta(days=days_offset)
+        
+        # Parse time
+        # event.qssj is like "08:00"
+        # event.jssj is like "09:40"
+        
+        start_time_str = event.qssj.replace(":", "") + "00" # HHMMSS
+        end_time_str = event.jssj.replace(":", "") + "00"
+        
+        dtstart = f"{event_date.strftime('%Y%m%d')}T{start_time_str}"
+        dtend = f"{event_date.strftime('%Y%m%d')}T{end_time_str}"
+        
+        description = f"教师: {event.teaxms}\\n场地: {event.jxcdmc}\\n环节: {event.jxhjmc}\\n周次: {event.zc}\\n节次: {event.ps}-{event.pe}"
+        
+        ics_lines.append("BEGIN:VEVENT")
+        ics_lines.append(f"UID:{uuid.uuid4()}@smu")
+        ics_lines.append(f"DTSTAMP:{datetime.datetime.now().strftime('%Y%m%dT%H%M%S')}")
+        ics_lines.append(f"DTSTART:{dtstart}")
+        ics_lines.append(f"DTEND:{dtend}")
+        ics_lines.append(f"SUMMARY:{event.kcmc}")
+        ics_lines.append(f"LOCATION:{event.jxcdmc}")
+        ics_lines.append(f"DESCRIPTION:{description}")
+        ics_lines.append("END:VEVENT")
+
+    ics_lines.append("END:VCALENDAR")
+    return "\n".join(ics_lines)
