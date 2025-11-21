@@ -6,6 +6,7 @@ from aggregate import aggregate
 from export import write_schedule, upload_schedule, export_to_ics
 from maskpass import askpass
 import datetime
+from getpass import getpass
 
 def notice():
     print('''
@@ -42,7 +43,7 @@ def q():
 def main():
     notice()
     account = input("请输入教务账号")
-    password = askpass(prompt="请输入密码",mask="●")
+    password = getpass("请输入密码：")
     weeks = int(input("请输入学期周数"))
     start_date = input("请输入学期起始日期（YYYY-M-D，如:2025-9-1）")
     session = requests.Session()
